@@ -53,15 +53,17 @@ const body = {
 
 if (tag) {
   Object.assign(parameters, { GHA_Tag: tag() });
+  Object.assign(body, { tag: tag() });
 } else {
   Object.assign(parameters, { GHA_Branch: branch() });
+  Object.assign(body, { branch: branch() });
 }
 
 const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipeline`;
 
 info(`Triggering CircleCI Pipeline for ${repoOrg}/${repoName}`);
 info(`Triggering URL: ${url}`);
-info(`Parameters:\n${JSON.stringify(parameters)}`);
+info(`Body:\n${JSON.stringify(body)}`);
 endGroup();
 
 axios
