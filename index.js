@@ -18,6 +18,8 @@ info(`Org: ${repoOrg}`);
 info(`Repo: ${repoName}`);
 const ref = context.ref;
 
+info(`Ref Value ${ref}`);
+
 const branch = () => {
   if (ref.startsWith("refs/heads/")) {
     return ref.substring(11);
@@ -51,12 +53,15 @@ const body = {
   parameters: parameters,
 };
 
+const target_branch = getInput("GHA_Branch");
+if (target_branch.length > 0) {
+  Object.assign(body, { branch: target_branch });
+}
+
 if (tag) {
   Object.assign(parameters, { GHA_Tag: tag() });
-  Object.assign(body, { tag: tag() });
 } else {
   Object.assign(parameters, { GHA_Branch: branch() });
-  Object.assign(body, { branch: branch() });
 }
 
 const url = `https://circleci.com/api/v2/project/gh/${repoOrg}/${repoName}/pipeline`;

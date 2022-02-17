@@ -7,6 +7,9 @@ inputs:
   GHA_Meta:
     required: false
     description: 'An optional additional metadata parameter. Will be available on the CircleCI pipeline as GHA_Meta'
+  GHA_Branch:
+    required: false
+    description: 'An optional way to specify branch, for each CCI should trigger a pipeline.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
